@@ -20,6 +20,7 @@ experience = {
     "summary": {"type": "string"},
     "tags": {"type": "list", "schema": {"type": "string"}},
     "website": {"type": "string", "regex": URL_REGEX, "required": False},
+    "logo": {"type": "string", "regex": URL_REGEX, "required": False},
 }
 
 degree = {
@@ -32,6 +33,16 @@ degree = {
 
 skill = {"name": {"type": "string"}, "level": {"type": "integer", "min": 0, "max": 100}}
 
+skills_group = {
+    "group_name": {"type": "string"}, 
+    "group_skills": {
+        "type": "list",
+        "required": True,
+        "require_all": True,
+        "schema": {"type": "dict", "schema": skill},
+    },
+}
+
 hobby = {"name": {"type": "string"}, "details": {"type": "string", "required": False}}
 
 project = {
@@ -42,7 +53,9 @@ project = {
 
 language = {"name": {"type": "string"}, "level": {"type": "string"}}
 
-profile = {"network": {"type": "string"}, "url": {"type": "string", "regex": URL_REGEX}}
+certification = {"name": {"type": "string"}, "description": {"type": "string"}}
+
+profile = {"network": {"type": "string"}, "url": {"type": "string", "regex": URL_REGEX}, "icon": {"type": "string"}}
 
 location = {
     "address": {"type": "string"},
@@ -54,7 +67,7 @@ location = {
 
 contact = {
     "name": {"type": "string"},
-    "job": {"type": "string"},
+#    "job": {"type": "string"},
     "date_of_birth": {"type": "string", "regex": DOB_REGEX},
     "email": {"type": "string", "regex": EMAIL_REGEX},
     "phone": {"type": "string", "regex": PHONE_NUMBER_REGEX},
@@ -64,6 +77,12 @@ contact = {
         "require_all": True,
         "schema": location,
     },
+    "picture": {"type": "string", "regex": URL_REGEX},
+}
+
+job = {
+    "name": {"type": "string"},
+    "summary": {"type": "string"},
 }
 
 resume = {
@@ -72,6 +91,12 @@ resume = {
         "required": True,
         "require_all": True,
         "schema": contact,
+    },
+    "job": {
+        "type": "dict",
+        "required": True,
+        "require_all": True,
+        "schema": job,
     },
     "profiles": {
         "type": "list",
@@ -95,7 +120,13 @@ resume = {
         "type": "list",
         "required": True,
         "require_all": True,
-        "schema": {"type": "dict", "schema": skill},
+        "schema": {"type": "dict", "schema": skills_group},
+    },
+    "certifications": {
+        "type": "list",
+        "required": True,
+        "require_all": True,
+        "schema": {"type": "dict", "schema": certification},
     },
     "languages": {
         "type": "list",

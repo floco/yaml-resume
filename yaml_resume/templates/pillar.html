@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <title>Pillar - Bootstrap 4 Resume/CV Template for Developers</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Responsive Resume Template">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+    
+    <!-- FontAwesome JS-->
+    <script defer src="https://use.fontawesome.com/releases/v5.1.1/js/all.js" integrity="sha384-BtvRZcyfv4r0x/phJt9Y9HhnN5ur1Z+kZbKVgzVBAlQZX4jvAuImlIz+bG7TS00a" crossorigin="anonymous"></script>
+       
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="/pillar/assets/css/pillar-1.css">
+
+
+</head> 
+
+<body>	
+
+    <article class="resume-wrapper text-center position-relative">
+	    <div class="resume-wrapper-inner mx-auto text-left bg-white shadow-lg">
+		    <header class="resume-header pt-4 pt-md-0">
+			    <div class="media flex-column flex-md-row">
+				    <img class="mr-3 img-fluid picture mx-auto" src="file:///Users/julien/Documents/1_Mutualis/CVs/pillar-v1.0.1/assets/images/profile.jpg" alt="">
+				    <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0">
+					    <div class="primary-info">
+						    <h1 class="name mt-0 mb-1 text-white text-uppercase text-uppercase">{{ resume.contact.name }}</h1>
+						    <div class="title mb-3">{{ resume.job.name }}</div>
+						    <ul class="list-unstyled">
+							    <li class="mb-2"><a href="mailto:{{ resume.contact.email }}"><i class="far fa-envelope fa-fw mr-2" data-fa-transform="grow-3"></i>{{ resume.contact.email }}</a></li>
+							    <li><a href="#"><i class="fas fa-mobile-alt fa-fw mr-2" data-fa-transform="grow-6"></i>{{ resume.contact.phone }}</a></li>
+						    </ul>
+					    </div><!--//primary-info-->
+					    <div class="secondary-info ml-md-auto mt-2">
+						    <ul class="resume-social list-unstyled">
+							{% for e in resume.profiles %}
+				                	<li class="mb-3"><a href="#"><span class="fa-container text-center mr-2"><i class="fab {{ e.icon }} fa-fw"></i></span>{{ e.url }}</a></li>
+						    {% endfor %}
+						    </ul>
+					    </div><!--//secondary-info-->
+					    
+				    </div><!--//media-body-->
+			    </div><!--//media-->
+		    </header>
+		    <div class="resume-body p-5">
+			    <section class="resume-section summary-section mb-5">
+				    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Career Summary</h2>
+				    <div class="resume-section-content">
+					    <p class="mb-0">{{ resume.job.summary }}</p>
+				    </div>
+			    </section><!--//summary-section-->
+			    <div class="row">
+				    <div class="col-md-9">
+					    <section class="resume-section experience-section mb-5">
+						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Work Experience</h2>
+						    <div class="resume-section-content">
+							    <div class="resume-timeline position-relative">
+									
+									{% for e in resume.experiences %}
+									<article class="resume-timeline-item position-relative pb-5">
+									    
+									    <div class="resume-timeline-item-header mb-2">
+										    <div class="d-flex flex-column flex-md-row">
+										        <h3 class="resume-position-title font-weight-bold mb-1">{{ e.position }}</h3>
+										        <div class="resume-company-name ml-auto">{{ e.company }}</div>
+										    </div><!--//row-->
+										    <div class="resume-position-time">{{ e.start_date }} - {% if not e.end_date %}Today{% else %}{{ e.end_date }}{% endif %}</div>
+									    </div><!--//resume-timeline-item-header-->
+									    <div class="resume-timeline-item-desc">
+										    <ul>
+												{% for line in e.summary.split('\n')[:-1] %}
+												<li>{{ line }}</li>
+												{% endfor %}
+											</ul>
+											{% if e.tags %}
+											<h4 class="resume-timeline-item-desc-heading font-weight-bold">Technologies used:</h4>
+										    <ul class="list-inline">
+												{% for tag in e.tags %}
+											    <li class="list-inline-item"><span class="badge badge-primary badge-pill">{{ tag }}</span></li>
+												{% endfor %}
+											</ul>
+											{% endif %}
+									    </div><!--//resume-timeline-item-desc-->
+
+								    </article><!--//resume-timeline-item-->
+								    {% endfor %}
+								    
+							    </div><!--//resume-timeline-->					    
+							    
+						    </div>
+					    </section><!--//experience-section-->
+				    </div>
+				    <div class="col-md-3">
+					    <section class="resume-section skills-section mb-5">
+						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Skills &amp; Tools</h2>
+						    <div class="resume-section-content">
+							    
+								{% for e in resume.skills if e.group_name != "Others" %}    
+						        <div class="resume-skill-item">
+							        <h4 class="resume-skills-cat font-weight-bold">{{ e.group_name }}</h4>
+							        <ul class="list-unstyled mb-4">
+										{% for f in e.group_skills %}
+								        <li class="mb-2">
+								            <div class="resume-skill-name">{{ f.name }}</div>
+									        <div class="progress resume-progress">
+											    <div class="progress-bar theme-progress-bar-dark" role="progressbar" style="width: {{ f.level }}%" aria-valuenow="{{ f.level }}" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+								        </li>
+								        {% endfor %}
+							        </ul>
+						        </div><!--//resume-skill-item-->
+						        {% endfor %}
+
+						        {% for e in resume.skills if e.group_name == "Others" %} 
+						        <div class="resume-skill-item">
+						            <h4 class="resume-skills-cat font-weight-bold">Others</h4>
+						            <ul class="list-inline">
+										{% for f in e.group_skills %}
+							            <li class="list-inline-item"><span class="badge badge-light">{{ f.name }}</span></li>
+										{% endfor %}
+						            </ul>
+						        </div><!--//resume-skill-item-->
+								{% endfor %}
+						    </div><!--resume-section-content-->
+					    </section><!--//skills-section-->
+					    <section class="resume-section education-section mb-5">
+						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Education</h2>
+						    <div class="resume-section-content">
+							    <ul class="list-unstyled">
+									{% for e in resume.education %}
+								    <li class="mb-2">
+								        <div class="resume-degree font-weight-bold">{{ e.degree }}</div>
+								        <div class="resume-degree-org">{{ e.institution }}</div>
+										<div class="resume-degree-org"><a href="{{ e.website }}">{{ e.website }}</a></div>
+								        <div class="resume-degree-time">{{ e.start_date }} - {{ e.end_date }}</div>
+								    </li>
+									{% endfor %}
+							    </ul>
+						    </div>
+					    </section><!--//education-section-->
+					    <section class="resume-section reference-section mb-5">
+						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Awards</h2>
+						    <div class="resume-section-content">
+							    <ul class="list-unstyled resume-awards-list">
+									{% for e in resume.certifications %} 
+								    <li class="mb-2 pl-4 position-relative">
+								        <i class="resume-award-icon fas fa-trophy position-absolute" data-fa-transform="shrink-2"></i>
+								        <div class="resume-award-name">{{ e.name }}</div>
+								        <div class="resume-award-desc">{{ e.description }}</div>
+								    </li>
+									{% endfor %} 
+							    </ul>
+						    </div>
+					    </section><!--//interests-section-->
+					    <section class="resume-section language-section mb-5">
+						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Language</h2>
+						    <div class="resume-section-content">
+							    <ul class="list-unstyled resume-lang-list">
+									{% for e in resume.languages %}  
+								    <li class="mb-2"><span class="resume-lang-name font-weight-bold">{{ e.name }}</span> <small class="text-muted font-weight-normal">({{ e.level }})</small></li>
+							    	{% endfor %} 
+								</ul>
+						    </div>
+					    </section><!--//language-section-->
+					    <section class="resume-section interests-section mb-5">
+						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Interests</h2>
+						    <div class="resume-section-content">
+							    <ul class="list-unstyled">
+									{% for e in resume.hobbies %}  
+								    <li class="mb-1">{{ e.name }} ({{ e.details }})</li>
+									{% endfor %} 
+							    </ul>
+						    </div>
+					    </section><!--//interests-section-->
+					    
+				    </div>
+			    </div><!--//row-->
+		    </div><!--//resume-body-->
+		    
+		    
+	    </div>
+    </article>  
+
+    
+    <footer class="footer text-center pt-2 pb-5">
+	     <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
+                <small class="copyright">Designed with <i class="fas fa-heart"></i> by <a href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+    </footer>
+
+    
+
+</body>
+</html> 
+
