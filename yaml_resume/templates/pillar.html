@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
-    <title>Pillar - Bootstrap 4 Resume/CV Template for Developers</title>
+    <title>CV</title>
     
     <!-- Meta -->
     <meta charset="utf-8">
@@ -18,7 +18,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.1.1/js/all.js" integrity="sha384-BtvRZcyfv4r0x/phJt9Y9HhnN5ur1Z+kZbKVgzVBAlQZX4jvAuImlIz+bG7TS00a" crossorigin="anonymous"></script>
        
     <!-- Theme CSS -->  
-    <link id="theme-style" rel="stylesheet" href="/pillar/assets/css/pillar-1.css">
+    <link id="theme-style" rel="stylesheet" href="pillar/assets/css/pillar-1.css">
 
 
 </head> 
@@ -29,7 +29,7 @@
 	    <div class="resume-wrapper-inner mx-auto text-left bg-white shadow-lg">
 		    <header class="resume-header pt-4 pt-md-0">
 			    <div class="media flex-column flex-md-row">
-				    <img class="mr-3 img-fluid picture mx-auto" src="file:///Users/julien/Documents/1_Mutualis/CVs/pillar-v1.0.1/assets/images/profile.jpg" alt="">
+				    <img class="mr-3 img-fluid picture mx-auto" src="{{ resume.contact.picture }}" alt="">
 				    <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0">
 					    <div class="primary-info">
 						    <h1 class="name mt-0 mb-1 text-white text-uppercase text-uppercase">{{ resume.contact.name }}</h1>
@@ -70,11 +70,12 @@
 									    <div class="resume-timeline-item-header mb-2">
 										    <div class="d-flex flex-column flex-md-row">
 										        <h3 class="resume-position-title font-weight-bold mb-1">{{ e.position }}</h3>
-										        <div class="resume-company-name ml-auto">{{ e.company }}</div>
+										        <div class="resume-company-name ml-auto text-uppercase">{{ e.company }}</div>
 										    </div><!--//row-->
-										    <div class="resume-position-time">{{ e.start_date }} - {% if not e.end_date %}Today{% else %}{{ e.end_date }}{% endif %}</div>
+										    <div class="resume-position-time">{{ e.start_date }} - {% if not e.end_date %}Today{% else %}{{ e.end_date }}{% endif %} ({{ e.country }} - {{ e.contract }})</div>
 									    </div><!--//resume-timeline-item-header-->
 									    <div class="resume-timeline-item-desc">
+											<!-- <p class="mb-0">{{ e.summary }}</p><br/> -->
 										    <ul>
 												{% for line in e.summary.split('\n')[:-1] %}
 												<li>{{ line }}</li>
@@ -147,7 +148,7 @@
 						    </div>
 					    </section><!--//education-section-->
 					    <section class="resume-section reference-section mb-5">
-						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Awards</h2>
+						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Certifications</h2>
 						    <div class="resume-section-content">
 							    <ul class="list-unstyled resume-awards-list">
 									{% for e in resume.certifications %} 
@@ -159,7 +160,7 @@
 									{% endfor %} 
 							    </ul>
 						    </div>
-					    </section><!--//interests-section-->
+					    </section><!--//certifications-section-->
 					    <section class="resume-section language-section mb-5">
 						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Language</h2>
 						    <div class="resume-section-content">
@@ -175,7 +176,7 @@
 						    <div class="resume-section-content">
 							    <ul class="list-unstyled">
 									{% for e in resume.hobbies %}  
-								    <li class="mb-1">{{ e.name }} ({{ e.details }})</li>
+								    <li class="mb-1">{{ e.name }}: <small class="text-muted font-weight-normal">{{ e.details }}</small></li>
 									{% endfor %} 
 							    </ul>
 						    </div>
