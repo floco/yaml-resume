@@ -70,7 +70,7 @@
 									    <div class="resume-timeline-item-header mb-2">
 										    <div class="d-flex flex-column flex-md-row">
 										        <h3 class="resume-position-title font-weight-bold mb-1">{{ e.position }}</h3>
-										        <div class="resume-company-name ml-auto text-uppercase">{{ e.company }}</div>
+										        <div class="resume-company-name ml-auto text-uppercase">{{ e.company }} </div><img src="{{ e.logo }}" height="25" style="float:right;margin: 0px 0px 0px 15px;"></img>
 										    </div><!--//row-->
 										    <div class="resume-position-time">{{ e.start_date }} - {% if not e.end_date %}Today{% else %}{{ e.end_date }}{% endif %} ({{ e.country }} - {{ e.contract }})</div>
 									    </div><!--//resume-timeline-item-header-->
