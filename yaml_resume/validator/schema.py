@@ -79,7 +79,7 @@ contact = {
         "require_all": True,
         "schema": location,
     },
-    "picture": {"type": "string", "regex": URL_REGEX},
+    "picture": {"type": "string"},
 }
 
 job = {
@@ -126,7 +126,7 @@ resume = {
     },
     "certifications": {
         "type": "list",
-        "required": True,
+        "required": False,
         "require_all": True,
         "schema": {"type": "dict", "schema": certification},
     },
