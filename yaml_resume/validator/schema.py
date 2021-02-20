@@ -22,7 +22,7 @@ experience = {
     "summary": {"type": "string"},
     "tags": {"type": "list", "schema": {"type": "string"}},
     "website": {"type": "string", "regex": URL_REGEX, "required": False},
-    "logo": {"type": "string", "regex": URL_REGEX, "required": False},
+    "logo": {"type": "string", "required": False},
 }
 
 degree = {
